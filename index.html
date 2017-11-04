@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en-us">
+<head>
+	<title>Trivial Trivia Game</title>
+	<meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="assets/css/style.css">
+    <link href="https://fonts.googleapis.com/css?family=Lobster+Two" rel="stylesheet">
+</head>
+
+<body>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js">
+	</script>
+    <script src="assets/javascript/app.js"></script>
+
+	<div class="container">
+		<!-- Header -->
+		<header>
+			<h1 id="header">Trivial Trivia!</h1>
+		</header>
+		<!-- Main Content Block -->
+		<div class="contents">
+			<div class="startScreen" id="gameStart">
+			<button id="startButton">Start</button>
+			</div>
+			<div id="gameScreen">
+				<div id="timer"></div>
+				<div id="question"></div>
+				<div id="multipleChoices">
+					<div id="optionOne"></div>
+					<div id="optionTwo"></div>
+					<div id="optionThree"></div>
+					<div id="optionFour"></div>				
+				</div>
+				<div id="answers"></div>
+			</div>
+			<div class="endScreen" id="gameResult"></div>
+		</div>
+	</div>
+
+</body>
+</html>

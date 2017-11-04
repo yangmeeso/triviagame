@@ -1,0 +1,34 @@
+/* Trivial Trivia Game */
+
+* {
+	box-sizing: border-box;
+}
+
+body {
+	font-size: 20px;
+	font-family: 'Lobster Two', cursive;
+	display: block;
+	text-align: center;
+	background-color: #4c4c4c;
+}
+
+.container {
+	width: 100%;
+	max-width: 980px;
+	font-weight: bold;
+}
+
+h1 {
+	color: #ffffff;
+}
+
+#startScreen {
+	width: 100%;
+	max-width: 680px;
+	margin: 10px auto;
+	padding: 240px;
+	border: 2px solid #ffffff;
+	background-color: #000000;
+	text-align: center;
+
+}

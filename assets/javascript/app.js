@@ -3,62 +3,39 @@
 	$(document).ready(function() {
 		var slides = {
 			trivia: [{
-					0 : {
-						question: "In any programming language, what is the most common way to iterate through an array?",
-						answer: "For Loops",
-						choices: ["For Loops", "If Statement", "Repeat Algorithm", "None"]
-						}
+					question: "In any programming language, what is the most common way to iterate through an array?",
+					answer: "For Loops",
+					choices: ["For Loops", "If Statement", "Repeat Algorithm", "None"]
 				},
 
 				{
-					1: {
-						question: "What is NOT the color of rainbow?",
-						answer: "Turquoise",
-						choices: ["Blue", "Purple", "Yellow", "Turquoise"]
-					}
+					question: "What is NOT the color of rainbow?",
+					answer: "Turquoise",
+					choices: ["Blue", "Purple", "Yellow", "Turquoise"]
 				},
 
 				{
-					2: {
-						question: "Which company was established on April 1st, 1976 by Steve Jobs, Steve Wozniak and Ronald Wayne?",
-						answer: "Apple",
-						choices: ["Apple", "Microsoft", "Atari", "Commodore"]
-					}
+					question: "Which company was established on April 1st, 1976 by Steve Jobs, Steve Wozniak and Ronald Wayne?",
+					answer: "Apple",
+					choices: ["Apple", "Microsoft", "Atari", "Commodore"]
 				},
 
 				{
-					3: {
-						question: "What does DOM stand for?",
-						answer: "Document Object Model",
-						choices: ["Dirty Old Man", "Document Object Model", "Decorative Oriented Model", "None"]
-					}
+					question: "What does DOM stand for?",
+					answer: "Document Object Model",
+					choices: ["Dirty Old Man", "Document Object Model", "Decorative Oriented Model", "None"]
 				}],
 
 		};
 
-		//$("#question").html("<p>Hello World</p>");
 
-	//for(var i = 0; i < slides.trivia.length; i++) {
-		//key = i;
-		//var questions = $('#question');
-		//console.log(question)
-		//console.log(slides.trivia[i][key].question)
-
-		//var triviaQuestion = $("p").text(slides.trivia[i][key].question);
-		//console.log(triviaQuestion);
-
-		//questions.append(triviaQuestion);
-		//console.log(question);
-	//}
-
-	var timer;
-	var number = 30;
-	var userGuess;
-	var questions = $("#question");
-	var optionOne = $("#optionOne");
-	var optionTwo = $("#optionTwo");
-	var optionThree = $("#optionThree");
-	var optionFour = $("#optionFour");	
+	var	number = 30;
+	var $question = $('#question');
+	var $multipleChoice = $('#multipleChoice');
+	var	index = 0;
+	var	questionSlide = slides.trivia[index];
+	var	correctAnswers = 0;
+	var	incorrectAnswers = 0;
 
 
 	$('#startButton').on('click', function() {
@@ -68,30 +45,19 @@
 	});
 
 	function startGame() {
-
 		timer = setInterval(decrement, 1000);
 
-		
-		for(var i = 0; i < slides.trivia.length; i++){
-			questions.html("<p>" + slides.trivia[i][i].question + "</p>");
+		$question.html("<p>" + questionSlide.question + "</p>");
 
-			console.log(slides.trivia[i][i].question);
-		
-			}
+		for(var i = 0; i < questionSlide.choices.length; i++){
 
-		for(var j = 0; j < slides.trivia[j][j].choices.length; j++) {
-			optionOne.html("<p>" + slides.trivia[j][j].choices[j] + "</p>");
-			optionTwo.html("<p>" + slides.trivia[j][j].choices[j] + "</p>");
-			optionThree.html("<p>" + slides.trivia[j][j].choices[j] + "</p>");
-			optionFour.html("<p>" + slides.trivia[j][j].choices[j] + "</p>");
-
-			console.log(slides.trivia[j][j].choices[j]);
+			$multipleChoice.append("<button class='answerOptions' id='answerButton' data_name='" + questionSlide.choices[i] + "'>" + questionSlide.choices[i] + "</button>");
 		}
 
+		answerCheck(event);
 
-	
-
-
+		console.log("Question: " + questionSlide.question);
+		console.log("Correct Answer: " + questionSlide.answer);
 	};
 
 	function decrement() {
@@ -110,11 +76,71 @@
 		// }
 	};
 
-	function stopGame () {
-		clearInterval(timer);
-	}
-	// startGame();
 
+
+	function answerCheck(event) {
+
+		if($(event.target).attr('data_name') === questionSlide.answer) {	
+			correctAnswers++;
+			
+			console.log("Correct: " + correctAnswers);
+		}
+
+		else {
+			incorrectAnswers++;
+
+			console.log("Incorrect: " + incorrectAnswers);
+		}
+
+		console.log("Chosen Answer by User: " + $(event.target).attr('data_name'));
+	};
+
+	function nextQuestion() {
+		index = index + 1;
+		console.log(slides.trivia[index]);
+		console.log(questionSlide.question);
+		// var	questionSlide = slides.trivia[index];
+		$question.html("<p>" + slides.trivia[index].question + "</p>");
+		$multipleChoice.empty();
+
+		// for(var i = 0; i < questionSlide.choices.length; i++){
+		for(var i = 0; i < slides.trivia[index].choices.length; i++){
+
+			$multipleChoice.append("<button class='answerOptions' id='answerButton' data_name='" + slides.trivia[index].choices[i] + "'>" + slides.trivia[index].choices[i] + "</button>");
+		}
+		// for(var index = 1; index < slides.trivia[index].length; index++) {
+		// startGame();
+
+		// console.log("Array Index: " + index);
+		// }
+
+	};
+
+
+	function stopGame() {
+		$question.html("<p>Game Over</p>");
+		$question.append("<p>Correct Answers: " + correctAnswers + "</p>");
+		$question.append("<p>Incorrect Answers: " + incorrectAnswers + "</p>");
+		$questionSlide.append("<p><button id='restartButton'>Try Again</button></p>")
+	};
+
+
+	function reset() {
+		number = 0;
+		index = 0;
+		correctAnswers = 0;
+		incorrectAnswers = 0;
+		startGame();
+	};
+
+	$(document).on("click", "restartButton", function() {
+		reset();
+	});
+
+	$(document).on("click", "#answerButton", function(event) {
+		answerCheck(event);
+		nextQuestion();
+	});
 
 
 
